@@ -14,7 +14,6 @@ $(document).ready(function() {
             swiper.mousewheel.disable();
             swiper4.mousewheel.disable();
             swiper5.mousewheel.disable();
-            
         },
         afterLoad: function() {
             // 전환 후 스크롤 방지 해제
@@ -35,8 +34,12 @@ $(document).ready(function() {
         spaceBetween: 0,
         freeMode: false,
         speed: 1000,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
         mousewheel: true,
-        on: swiperEvents(swiper)
+        on: swiperEvents()
     });
 
     // Swiper 설정 (sec4)
@@ -45,8 +48,12 @@ $(document).ready(function() {
         spaceBetween: 0,
         freeMode: false,
         speed: 1000,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
         mousewheel: true,
-        on: swiperEvents(swiper4)
+        on: swiperEvents()
     });
 
     // Swiper 설정 (sec5)
@@ -55,24 +62,28 @@ $(document).ready(function() {
         spaceBetween: 0,
         freeMode: false,
         speed: 1000,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
         mousewheel: true,
-        on: swiperEvents(swiper5)
+        on: swiperEvents()
     });
 
     // Swiper 이벤트 핸들러 공통 함수
-    function swiperEvents(currentSwiper) {
+    function swiperEvents() {
         return {
             slideChange: function() {
-                var idx = currentSwiper.activeIndex;
-                var length = currentSwiper.slides.length;
+                var idx = this.activeIndex;
+                var length = this.slides.length;
 
                 if (idx !== 0 && idx !== length - 1) {
                     $.fn.fullpage.setAllowScrolling(false);
                 }
             },
             slideChangeTransitionEnd: function() {
-                var idx = currentSwiper.activeIndex;
-                var length = currentSwiper.slides.length;
+                var idx = this.activeIndex;
+                var length = this.slides.length;
 
                 if (idx === 0 || idx === length - 1) {
                     $.fn.fullpage.setAllowScrolling(true);
@@ -88,32 +99,20 @@ $(document).ready(function() {
                 } else if (this.startY + 10 < endY) {
                     this.slidePrev();
                 }
-                
             }
         };
     }
 
     // 키보드 이벤트로 슬라이드 전환
     $(document).on('keydown', function(e) {
-        // KeyDown 이벤트를 처리할 때, 스와이퍼에 대해 개별적으로 동작하도록 설정
         if (e.key === 'ArrowRight') {
-            // 현재 섹션에 해당하는 swiper 인스턴스만 이동
-            if ($('.sec3').hasClass('active')) {
-                swiper.slideNext();
-            } else if ($('.sec4').hasClass('active')) {
-                swiper4.slideNext();
-            } else if ($('.sec5').hasClass('active')) {
-                swiper5.slideNext();
-            }
+            swiper.slideNext();
+            swiper4.slideNext();
+            swiper5.slideNext();
         } else if (e.key === 'ArrowLeft') {
-            // 현재 섹션에 해당하는 swiper 인스턴스만 이동
-            if ($('.sec3').hasClass('active')) {
-                swiper.slidePrev();
-            } else if ($('.sec4').hasClass('active')) {
-                swiper4.slidePrev();
-            } else if ($('.sec5').hasClass('active')) {
-                swiper5.slidePrev();
-            }
+            swiper.slidePrev();
+            swiper4.slidePrev();
+            swiper5.slidePrev();
         }
     });
 
