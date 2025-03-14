@@ -7,14 +7,13 @@ $(document).ready(function () {
 
   // fullpage 설정
   $("#container").fullpage({
-    anchors: ["sec1", "sec2", "sec3", "sec4", "sec5", "sec6"],
+    anchors: ["sec1", "sec3", "sec4", "sec5", "sec6"],
     menu: "#menu",
     scrollingSpeed: 1000,
     onLeave: function (index, nextIndex, direction) {
       if (!isSwiperActive) {
         $.fn.fullpage.setAllowScrolling(true);
       }
-      // Swiper가 있는 섹션을 떠날 때 해당 Swiper를 초기화
       resetSwiper(index);
     },
     afterLoad: function (anchorLink, index) {
@@ -25,7 +24,7 @@ $(document).ready(function () {
   });
 
   // Swiper 설정 함수
-  function initSwiper(selector) {
+  function initSwiper(selector, length) {
     return new Swiper(selector, {
       slidesPerView: 1,
       spaceBetween: 70,
@@ -35,29 +34,32 @@ $(document).ready(function () {
       on: {
         slideChangeTransitionStart: function () {
           const idx = this.activeIndex;
-          const length = this.slides.length;
 
           if (length === 2) {
-            isSwiperActive = idx !== 0;
-            $.fn.fullpage.setAllowScrolling(idx === 0);
+            // 🔥 Swiper4, Swiper5 인덱스 개수가 2개일 경우 처리
+            if (idx === 0) {
+              isSwiperActive = false;
+              $.fn.fullpage.setAllowScrolling(true);
+            } else {
+              isSwiperActive = true;
+              $.fn.fullpage.setAllowScrolling(false);
+            }
           } else {
-            if (idx !== 0 && idx !== length - 1) {
+            // 일반 Swiper 처리
+            if (idx === 0 || idx === length - 1) {
+              isSwiperActive = false;
+              $.fn.fullpage.setAllowScrolling(true);
+            } else {
               isSwiperActive = true;
               $.fn.fullpage.setAllowScrolling(false);
             }
           }
-
-          $(".img-box").animate({ scrollTop: 0 }, 500);
         },
         slideChangeTransitionEnd: function () {
           const idx = this.activeIndex;
-          const length = this.slides.length;
 
           if (length === 2) {
-            isSwiperActive = idx !== 0;
-            $.fn.fullpage.setAllowScrolling(idx === 0);
-
-            // ✅ 마지막 슬라이드에서 다음 섹션으로 넘어가게 처리
+            // 🔥 마지막 슬라이드에서 아래로 스크롤 시 fullpage 실행
             if (idx === length - 1) {
               isSwiperActive = false;
               $.fn.fullpage.setAllowScrolling(true);
@@ -75,13 +77,9 @@ $(document).ready(function () {
         },
         touchEnd: function () {
           const idx = this.activeIndex;
-          const length = this.slides.length;
 
           if (length === 2) {
-            isSwiperActive = idx !== 0;
-            $.fn.fullpage.setAllowScrolling(idx === 0);
-
-            // ✅ 마지막 슬라이드에서 다음 섹션으로 넘어가게 처리
+            // ✅ 마지막 슬라이드에서 아래로 스크롤 시 fullpage 실행
             if (idx === length - 1) {
               isSwiperActive = false;
               $.fn.fullpage.setAllowScrolling(true);
@@ -96,9 +94,9 @@ $(document).ready(function () {
   }
 
   // Swiper 인스턴스 생성
-  const swiper = initSwiper(".sec3-container");
-  const swiper4 = initSwiper(".sec4-container");
-  const swiper5 = initSwiper(".sec5-container");
+  const swiper = initSwiper(".sec3-container", 5);
+  const swiper4 = initSwiper(".sec4-container", 2);
+  const swiper5 = initSwiper(".sec5-container", 2);
 
   // Swiper 리셋 함수
   function resetSwiper(index) {
@@ -106,10 +104,10 @@ $(document).ready(function () {
       if (index === 3) swiper.slideTo(0, 0, false);
       if (index === 4) swiper4.slideTo(0, 0, false);
       if (index === 5) swiper5.slideTo(0, 0, false);
-    }, 500); // 애니메이션이 끝난 후 리셋되도록 약간의 지연 추가
+    }, 500);
   }
 
-  // 키보드 이벤트 처리 개선
+  // 키보드 이벤트 처리
   $(document).on("keydown", function (e) {
     const activeSection = $(".section.active");
     let activeSwiper = null;
@@ -119,31 +117,28 @@ $(document).ready(function () {
     if (activeSection.hasClass("sec5")) activeSwiper = swiper5;
 
     if (activeSwiper) {
-      if (e.key === "ArrowRight") {
-        if (!activeSwiper.isEnd) {
-          activeSwiper.slideNext();
-        }
-      } else if (e.key === "ArrowLeft") {
-        if (!activeSwiper.isBeginning) {
-          activeSwiper.slidePrev();
-        }
+      if (e.key === "ArrowRight" && !activeSwiper.isEnd) {
+        activeSwiper.slideNext();
+      } else if (e.key === "ArrowLeft" && !activeSwiper.isBeginning) {
+        activeSwiper.slidePrev();
       }
     }
   });
 
-  // 마우스 오버 시 스크롤 방지 개선
+  // 마우스 오버 시 스크롤 방지
   $(".img-box").on("mouseenter", function () {
     $.fn.fullpage.setAllowScrolling(false);
     isSwiperActive = true;
 
     $(this)
+      .children(".img-wrap")
       .css("overflow", "auto")
       .on("scroll mousewheel", function (event) {
         event.stopPropagation();
       });
   });
 
-  // 마우스가 떠났을 때 상태를 제대로 처리
+  // 마우스가 떠났을 때 상태 처리
   $(".img-box").on("mouseleave", function () {
     const activeSection = $(".section.active");
     let activeSwiper = null;
@@ -156,12 +151,23 @@ $(document).ready(function () {
       const idx = activeSwiper.activeIndex;
       const length = activeSwiper.slides.length;
 
-      if (idx === 0 || idx === length - 1) {
-        isSwiperActive = false;
-        $.fn.fullpage.setAllowScrolling(true);
+      if (length === 2) {
+        // 🔥 Swiper4, Swiper5에서 마지막 인덱스 처리
+        if (idx === length - 1) {
+          isSwiperActive = false;
+          $.fn.fullpage.setAllowScrolling(true);
+        } else {
+          isSwiperActive = true;
+          $.fn.fullpage.setAllowScrolling(false);
+        }
+      } else {
+        if (idx === 0 || idx === length - 1) {
+          isSwiperActive = false;
+          $.fn.fullpage.setAllowScrolling(true);
+        }
       }
     }
 
-    $(this).css("overflow", "").off("scroll mousewheel");
+    $(this).children(".img-wrap").css("overflow", "").off("scroll mousewheel");
   });
 });
