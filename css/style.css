@@ -267,7 +267,6 @@ ul {
 
 .txt-box .txt {
 	font-size: 1.1vw;
-	font-
 }
 
 .img-box::-webkit-scrollbar {
@@ -293,7 +292,7 @@ ul {
 }
 
 .sec1 p {
-	font-size: 2.1vw;
+	font-size: 1.8vw;
 
 }
 
@@ -321,7 +320,7 @@ ul {
 	font-size: 16px;
 	padding-right: 10px;
 	transition: all 0.3s;
-	margin-top: 2vw;
+	margin-top: 4vw;
 }
 
 .link::after {
