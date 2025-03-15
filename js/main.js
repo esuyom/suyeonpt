@@ -3,132 +3,129 @@ $(document).ready(function () {
     history.replaceState(null, null, window.location.pathname);
   }
 
-  let isSwiperActive = false;
+  let activeSwiper = null;
+  let isFullpageScrollAllowed = true;
+  let triggeredByUserClick = false;
 
-  // fullpage 설정
+  $("#menu a").on("click", function () {
+    triggeredByUserClick = true;
+  });
+
   $("#container").fullpage({
-    anchors: ["sec1", "sec2", "sec3", "sec4", "sec5", "sec6"],
+    anchors: ["sec1", "sec3", "sec4", "sec5", "sec6"],
     menu: "#menu",
     scrollingSpeed: 1000,
     onLeave: function (index, nextIndex, direction) {
-      if (!isSwiperActive) {
-        $.fn.fullpage.setAllowScrolling(true);
+      if (!isFullpageScrollAllowed && !triggeredByUserClick) {
+        return false; // fullpage 스크롤 방지
       }
+      resetSwiper(index);
       
-      $(".img-box").animate({ scrollTop: 0 }, 1000);
     },
     afterLoad: function (anchorLink, index) {
-      if (!isSwiperActive) {
-        $.fn.fullpage.setAllowScrolling(true);
+      isFullpageScrollAllowed = true; // 페이지 로드 후 다시 스크롤 허용
+      triggeredByUserClick = false; // 사용자 클릭 상태 초기화
+      if (index === 1 ){
+        $("#menu").fadeOut(300);
+      }else{
+        $("#menu").fadeIn(300);
       }
     },
   });
 
-  // Swiper 설정 함수
   function initSwiper(selector) {
-    return new Swiper(selector, {
+    let swiperInstance = new Swiper(selector, {
       slidesPerView: 1,
       spaceBetween: 70,
       freeMode: false,
       speed: 1000,
       mousewheel: true,
       on: {
-        slideChange: function () {
+        slideChangeTransitionStart: function () {
+          activeSwiper = this;
           const idx = this.activeIndex;
           const length = this.slides.length;
 
-          // 중간 슬라이드일 때 fullpage 스크롤 비활성화
-          if (idx !== 0 && idx !== length - 1) {
-            $.fn.fullpage.setAllowScrolling(false);
-            isSwiperActive = true;
-          }
+          isFullpageScrollAllowed = false;
           
-          $(".img-box").animate({ scrollTop: 0 }, 1000);
+          setTimeout(() => {
+            $(".img-wrap").animate({ scrollTop: 0 }, 500);
+          }, 500);
+
+          if (idx === 0) {
+            $.fn.fullpage.setAllowScrolling(true);
+          } else {
+            $.fn.fullpage.setAllowScrolling(false);
+          }
         },
         slideChangeTransitionEnd: function () {
           const idx = this.activeIndex;
           const length = this.slides.length;
-
-          // 첫 번째나 마지막 슬라이드일 때만 fullpage 스크롤 활성화
+        
           if (idx === 0 || idx === length - 1) {
+            isFullpageScrollAllowed = true;
             $.fn.fullpage.setAllowScrolling(true);
-            isSwiperActive = false;
+          } else {
+            isFullpageScrollAllowed = false;
+            $.fn.fullpage.setAllowScrolling(false);
           }
-          
-        },
+        },        
         touchStart: function () {
-          isSwiperActive = true;
+          isFullpageScrollAllowed = false;
           $.fn.fullpage.setAllowScrolling(false);
         },
         touchEnd: function () {
           const idx = this.activeIndex;
           const length = this.slides.length;
 
-          // 첫 번째나 마지막 슬라이드일 때만 상태 변경 허용
           if (idx === 0 || idx === length - 1) {
-            isSwiperActive = false;
+            isFullpageScrollAllowed = true;
             $.fn.fullpage.setAllowScrolling(true);
           }
         },
       },
     });
+
+    return swiperInstance;
   }
 
-  // Swiper 인스턴스 생성
   const swiper = initSwiper(".sec3-container");
   const swiper4 = initSwiper(".sec4-container");
   const swiper5 = initSwiper(".sec5-container");
 
-  // 키보드 이벤트 처리 개선
-  $(document).on("keydown", function (e) {
-    if (isSwiperActive) return;
+  function resetSwiper(index) {
+    if (index === 3) swiper.slideTo(0, 0, false);
+    if (index === 4) swiper4.slideTo(0, 0, false);
+    if (index === 5) swiper5.slideTo(0, 0, false);
+  }
 
-    const activeSection = $(".section.active");
-    let activeSwiper = null;
-
-    if (activeSection.hasClass("sec3")) activeSwiper = swiper;
-    if (activeSection.hasClass("sec4")) activeSwiper = swiper4;
-    if (activeSection.hasClass("sec5")) activeSwiper = swiper5;
-
-    if (activeSwiper) {
-      if (e.key === "ArrowRight") {
-        activeSwiper.slideNext();
-      } else if (e.key === "ArrowLeft") {
-        activeSwiper.slidePrev();
-      }
-    }
-  });
-
-  // 마우스 오버 시 스크롤 방지 개선
   $(".img-box").on("mouseenter", function () {
     $.fn.fullpage.setAllowScrolling(false);
-    isSwiperActive = true;
+    isFullpageScrollAllowed = false;
 
-    $(this).css("overflow", "auto").on("scroll mousewheel", function (event) {
-      event.stopPropagation();
-    });
+    $(this)
+      .children(".img-wrap")
+      .css("overflow", "auto")
+      .on("scroll mousewheel", function (event) {
+        event.stopPropagation();
+      });
+
   });
 
-  // 마우스가 떠났을 때 상태를 제대로 처리
   $(".img-box").on("mouseleave", function () {
-    const activeSection = $(".section.active");
-    let activeSwiper = null;
-
-    if (activeSection.hasClass("sec3")) activeSwiper = swiper;
-    if (activeSection.hasClass("sec4")) activeSwiper = swiper4;
-    if (activeSection.hasClass("sec5")) activeSwiper = swiper5;
-
-    // Swiper 인덱스가 0 또는 마지막일 때만 fullpage 스크롤 활성화
     if (activeSwiper) {
       const idx = activeSwiper.activeIndex;
       const length = activeSwiper.slides.length;
 
       if (idx === 0 || idx === length - 1) {
-        isSwiperActive = false;
+        isFullpageScrollAllowed = true;
         $.fn.fullpage.setAllowScrolling(true);
       }
-    }
 
-    $(this).css("overflow", "").off("scroll mousewheel");
+          $(this).children(".img-wrap").css("overflow", "").off("scroll mousewheel");
+
+    }
   });
+
+
 });
