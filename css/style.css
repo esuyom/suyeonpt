@@ -124,6 +124,21 @@ ul {
 	font-weight: 300;
 	line-height: 1.5;
 	position: relative;
+<<<<<<< HEAD
+=======
+}
+
+#container::before {
+	content: "";
+	width: 100%;
+	height: 10px;
+	background: rgb(0, 140, 255);
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: block;
+	z-index: 2;
+>>>>>>> c15d5533bfaa437c24c043088b9c200dc7fd3b41
 }
 
 
@@ -165,9 +180,15 @@ ul {
 }
 
 #menu {
+<<<<<<< HEAD
 	display:none;
 	position: fixed;
 	top: 40px;
+=======
+	opacity: 1;
+	position: fixed;
+	top: 25px;
+>>>>>>> c15d5533bfaa437c24c043088b9c200dc7fd3b41
 	right: 20px;
 	height: 40px;
 	z-index: 70;
@@ -221,7 +242,22 @@ ul {
 .section {
 	font-size: 21px;
 	text-align: center;
+<<<<<<< HEAD
 	padding: 0 70px;
+=======
+	background-color: #303030;
+	padding: 0 70px;
+}
+
+.section::before {
+	content: "";
+	width: 12px;
+	height: 100%;
+	/* background: red; */
+	position: Absolute;
+	left: 0;
+	top: 0;
+>>>>>>> c15d5533bfaa437c24c043088b9c200dc7fd3b41
 }
 .sec1, .sec4, .sec6{
 	background: linear-gradient(180deg, #290098, #0c0030);
@@ -244,15 +280,24 @@ ul {
 	flex-direction: row;
 	gap: 0;
 	height: 650px;
+<<<<<<< HEAD
 	margin-top:5vw;
+=======
+>>>>>>> c15d5533bfaa437c24c043088b9c200dc7fd3b41
 }
 
 .section h2 {
 	text-align: left;
+<<<<<<< HEAD
 	font-size: 1.7vw;
 	font-weight: 600;
 	position: absolute;
 	top: 40px;
+=======
+	font-size: 1.5vw;
+	font-weight: 700;
+	margin-bottom: 4vw;
+>>>>>>> c15d5533bfaa437c24c043088b9c200dc7fd3b41
 }
 
 .txt-box {
@@ -321,12 +366,21 @@ ul {
 	text-decoration: none;
 	color: #282828;
 	font-weight: 600;
+<<<<<<< HEAD
 	width: 150px;
 	height: 45px;
 	line-height: 45px;
 	text-align: center;
 	border-radius: 10px;
 	font-size: 18px;
+=======
+	width: 140px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 10px;
+	font-size: 16px;
+>>>>>>> c15d5533bfaa437c24c043088b9c200dc7fd3b41
 	padding-right: 10px;
 	transition: all 0.3s;
 	margin-top: 4vw;
@@ -346,7 +400,11 @@ ul {
 }
 
 .link:hover {
+<<<<<<< HEAD
 	background: rgb(255 115 0);
+=======
+	background: rgb(0, 140, 255);
+>>>>>>> c15d5533bfaa437c24c043088b9c200dc7fd3b41
 	color: #fff;
 }
 
