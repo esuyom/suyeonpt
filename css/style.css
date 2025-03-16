@@ -122,7 +122,7 @@ ul {
 	height: 100%;
 	color: #fff;
 	font-weight: 300;
-	line-height: 1.5;
+	line-height: 1.6;
 	position: relative;
 }
 
@@ -281,17 +281,24 @@ ul {
 	/* for Chrome, Safari, and Opera */
 }
 
-.to-be-conts .con {
-	flex-direction: column;
+.to-be-conts .txt-box {
+	padding:0;
 }
 
 .to-be-conts .con {}
-
+.to-be-conts .img2{right:0;bottom: -29px;width: 450px !important;height: 285px !important;}
+.to-be-conts .img2 img{width:100%;}
+.obj{position:absolute; }
 .tobe-wrap {
-	height: 50%;
+	position:relative;
+	height: 100%;
 	overflow: hidden;
+	width:48%;
+	padding:0 50px;
+	
 }
-
+.tobe-wrap  .img{width:100%;height:100%;display: flex;align-items: center;justify-content: center;}
+.tobe-wrap .img img{height: 100%;}
 .sec1 h1 {
 	font-size: 3.7vw;
 	font-weight: 700;
@@ -346,7 +353,7 @@ ul {
 }
 
 .link:hover {
-	background: rgb(255 115 0);
+	background: rgb(255 160 0);
 	color: #fff;
 }
 
