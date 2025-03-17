@@ -165,7 +165,7 @@ ul {
 }
 
 #menu {
-	display:none;
+	display: none;
 	position: fixed;
 	top: 40px;
 	right: 20px;
@@ -223,11 +223,16 @@ ul {
 	text-align: center;
 	padding: 0 70px;
 }
-.sec1, .sec4, .sec6{
-	background: linear-gradient(180deg, #290098, #0c0030);
+
+.sec1,
+.sec4,
+.sec6 {
+	background: linear-gradient(180deg, #006bd6, #0c0030);
 }
-.sec3,.sec5{
-	background: linear-gradient(180deg, #0c0030, #290098);
+
+.sec3,
+.sec5 {
+	background: linear-gradient(180deg, #0c0030, #006bd6);
 }
 
 
@@ -244,7 +249,7 @@ ul {
 	flex-direction: row;
 	gap: 0;
 	height: 650px;
-	margin-top:5vw;
+	margin-top: 5vw;
 }
 
 .section h2 {
@@ -282,29 +287,69 @@ ul {
 }
 
 .to-be-conts .txt-box {
-	padding:0;
+	padding: 0;
 }
 
 .to-be-conts .con {}
-.to-be-conts .img2{right:0;bottom: -29px;width: 450px !important;height: 285px !important;}
-.to-be-conts .img2 img{width:100%;}
-.obj{position:absolute; }
+
+.to-be-conts .img2 {
+	right: 0;
+	bottom: -29px;
+	width: 450px !important;
+	height: 285px !important;
+}
+
+.to-be-conts .img2 img {
+	width: 100%;
+}
+
+.obj {
+	position: absolute;
+}
+
 .tobe-wrap {
-	position:relative;
+	position: relative;
 	height: 100%;
 	overflow: hidden;
-	width:48%;
-	padding:0 50px;
-	
+	width: 48%;
+	padding: 0 50px;
+
 }
-.tobe-wrap  .img{width:100%;height:100%;display: flex;align-items: center;justify-content: center;}
-.tobe-wrap .img img{height: 100%;}
-.to-be-conts ul{}
-.to-be-conts ul li{font-size: 1.2vw;display: flex;align-items: center;}
-.to-be-conts ul li::before{content:"";background:rgb(255 160 0);width: 5px;height: 5px;border-radius: 50%;display:inline-block;margin-right: 5px;}
-.to-be-conts ul{
-    margin-top: 25px;
+
+.tobe-wrap .img {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
+
+.tobe-wrap .img img {
+	height: 100%;
+}
+
+.to-be-conts ul {}
+
+.to-be-conts ul li {
+	font-size: 1.2vw;
+	display: flex;
+	align-items: center;
+}
+
+.to-be-conts ul li::before {
+	content: "";
+	background: rgb(255 160 0);
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.to-be-conts ul {
+	margin-top: 25px;
+}
+
 .sec1 h1 {
 	font-size: 3.7vw;
 	font-weight: 700;
