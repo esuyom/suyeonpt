@@ -210,6 +210,7 @@ ul {
 	background-repeat: no-repeat;
 	background-size: contain;
 	position: relative;
+	filter: drop-shadow(10px 10px 10px#0000006b);
 }
 
 .section .wrap {
@@ -294,12 +295,22 @@ ul {
 
 .to-be-conts .img2 {
 	right: 0;
-	bottom: -29px;
+	bottom: -30px;
 	width: 450px !important;
 	height: 285px !important;
+	box-shadow: 10px 10px 10px #00000054;
 }
 
-.to-be-conts .img2 img {
+.to-be-conts .img3 {
+	right: 24%;
+	top: -77px;
+	width: 520px !important;
+	height: 307px !important;
+	box-shadow: -10px 10px 10px #00000054;
+}
+
+.to-be-conts .img2 img,
+.to-be-conts .img3 img {
 	width: 100%;
 }
 
@@ -328,22 +339,20 @@ ul {
 	height: 100%;
 }
 
-.to-be-conts ul {}
-
 .to-be-conts ul li {
-	font-size: 1.2vw;
+	font-size: 1.3vw;
 	display: flex;
 	align-items: center;
 }
 
 .to-be-conts ul li::before {
 	content: "";
-	background: rgb(255 160 0);
-	width: 5px;
-	height: 5px;
+	background: #FFB400;
+	width: 6px;
+	height: 6px;
 	border-radius: 50%;
 	display: inline-block;
-	margin-right: 5px;
+	margin-right: 8px;
 }
 
 .to-be-conts ul {
@@ -404,7 +413,7 @@ ul {
 }
 
 .link:hover {
-	background: rgb(255 160 0);
+	background: #FFB400;
 	color: #fff;
 }
 
