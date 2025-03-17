@@ -295,10 +295,10 @@ ul {
 .to-be-conts .con {}
 
 .to-be-conts .img2 {
-	right: 0;
-	bottom: -30px;
-	width: 450px !important;
-	height: 285px !important;
+	right: 10px;
+	bottom: -35px;
+	width: 400px !important;
+	height: 255px !important;
 	box-shadow: 10px 10px 10px #00000054;
 }
 
