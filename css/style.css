@@ -227,12 +227,12 @@ ul {
 .sec1,
 .sec4,
 .sec6 {
-	background: linear-gradient(180deg, #006bd6, #0c0030);
+	background: linear-gradient(180deg, #004bc7, #0c0030);
 }
 
 .sec3,
 .sec5 {
-	background: linear-gradient(180deg, #0c0030, #006bd6);
+	background: linear-gradient(180deg, #0c0030, #004bc7);
 }
 
 
