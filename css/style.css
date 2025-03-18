@@ -402,6 +402,7 @@ ul {
 	padding-right: 10px;
 	transition: all 0.3s;
 	margin-top: 4vw;
+	letter-spacing: 1px;
 }
 
 .link::after {
@@ -412,17 +413,11 @@ ul {
 	background-size: contain;
 	display: block;
 	position: absolute;
-	right: 27px;
+	right: 25px;
 	top: calc(50% - 5px);
 	transition: all 0.3s;
 }
 
 .link:hover {
 	background: #FFB400;
-	color: #fff;
-}
-
-.link:hover::after {
-	background: url(../img/link.png)no-repeat;
-	background-size: contain;
 }
